@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <View>
       <Text>New App!!!</Text>
     </View>
   );
