@@ -1,15 +1,14 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+
 import { Provider } from 'react-redux';
 
 import store from './store/store';
+import ShopNavigator from './navigation/ShopNavigator';
 
 export default function App() {
   return (
     <Provider store={store}>
-      <View>
-        <Text>New App!!!</Text>
-      </View>
+      <ShopNavigator />
     </Provider>
   );
 }
