@@ -1,8 +1,8 @@
 class CartItem {
-  constructor(quantity, productPrice, productTile, sum) {
+  constructor(quantity, productPrice, productTitle, sum) {
     this.quantity = quantity;
     this.productPrice = productPrice;
-    this.productTile = productTile;
+    this.productTitle = productTitle;
     this.sum = sum;
   }
 }
