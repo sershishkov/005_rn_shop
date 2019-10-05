@@ -20,8 +20,8 @@ export default (state = initialState, action) => {
       );
       return {
         ...state,
-        availableProducts: [...state.availableProducts, newProduct],
-        userProducts: [...state.userProducts, newProduct]
+        availableProducts: state.availableProducts.concat(newProduct),
+        userProducts: state.userProducts.concat(newProduct)
       };
     case UPDATE_PRODUCT:
       const productIndex = state.userProducts.findIndex(
@@ -35,22 +35,18 @@ export default (state = initialState, action) => {
         action.productData.description,
         state.userProducts[productIndex].price
       );
-      const updatedUserPruducts = [...state.userProducts];
-      updatedUserPruducts[productIndex] = updatedProduct;
-
+      const updatedUserProducts = [...state.userProducts];
+      updatedUserProducts[productIndex] = updatedProduct;
       const availableProductIndex = state.availableProducts.findIndex(
         prod => prod.id === action.pid
       );
-
       const updatedAvailableProducts = [...state.availableProducts];
       updatedAvailableProducts[availableProductIndex] = updatedProduct;
-
       return {
         ...state,
         availableProducts: updatedAvailableProducts,
-        userProducts: updatedUserPruducts
+        userProducts: updatedUserProducts
       };
-
     case DELETE_PRODUCT:
       return {
         ...state,
