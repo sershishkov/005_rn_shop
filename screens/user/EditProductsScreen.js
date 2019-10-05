@@ -11,7 +11,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useSelector, useDispatch } from 'react-redux';
 
 import HeaderButton from '../../components/UI/HeaderButton';
-import { createProduct, updateProduct } from '../../store/actions/products';
+import * as productsActions from '../../store/actions/products';
 
 const EditProductsScreen = props => {
   const prodId = props.navigation.getParam('productId');
@@ -19,6 +19,7 @@ const EditProductsScreen = props => {
     state.products.userProducts.find(prod => prod.id === prodId)
   );
   const dispatch = useDispatch();
+
   const [title, setTitle] = useState(editedProduct ? editedProduct.title : '');
   const [imageUrl, setImageUrl] = useState(
     editedProduct ? editedProduct.imageUrl : ''
@@ -30,12 +31,16 @@ const EditProductsScreen = props => {
 
   const submitHandler = useCallback(() => {
     if (editedProduct) {
-      dispatch(updateProduct(prodId, title, description, imageUrl));
+      dispatch(
+        productsActions.updateProduct(prodId, title, description, imageUrl)
+      );
     } else {
-      dispatch(createProduct(title, description, imageUrl, +price));
+      dispatch(
+        productsActions.createProduct(title, description, imageUrl, +price)
+      );
     }
     props.navigation.goBack();
-  }, [createProduct, prodId, title, description, imageUrl, price]);
+  }, [dispatch, prodId, title, description, imageUrl, price]);
 
   useEffect(() => {
     props.navigation.setParams({ submit: submitHandler });
@@ -85,11 +90,10 @@ const EditProductsScreen = props => {
 
 EditProductsScreen.navigationOptions = navData => {
   const submitFn = navData.navigation.getParam('submit');
-
   return {
     headerTitle: navData.navigation.getParam('productId')
       ? 'Edit Product'
-      : 'Add product',
+      : 'Add Product',
     headerRight: (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
