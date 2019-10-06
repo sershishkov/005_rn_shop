@@ -8,35 +8,48 @@ import {
 import Product from '../../models/product';
 
 export const fetchProducts = () => {
-  return async dispatch => {
-    const response = await fetch(
-      'https://rn-shop-e9dd2.firebaseio.com/products.json',
-      {
-        // method: 'GET', //Если GET то можно не указывать метод
-      }
-    );
-    const resData = await response.json();
-    const loadedProducts = [];
-
-    for (let key in resData) {
-      loadedProducts.push(
-        new Product(
-          key,
-          'u1',
-          resData[key].title,
-          resData[key].imageUrl,
-          resData[key].description,
-          resData[key].price
-        )
+  try {
+    return async dispatch => {
+      const response = await fetch(
+        'https://rn-shop-e9dd2.firebaseio.com/products.json',
+        {
+          // method: 'GET',
+          //Если GET то можно не указывать метод
+        }
       );
-    }
-    console.log(loadedProducts);
+      // console.log(response);
 
-    dispatch({
-      type: SET_PRODUCT,
-      products: loadedProducts
-    });
-  };
+      if (!response.ok) {
+        throw new Error('Something went wrong!');
+      }
+
+      const resData = await response.json();
+      // console.log(resData);
+      const loadedProducts = [];
+
+      for (let key in resData) {
+        loadedProducts.push(
+          new Product(
+            key,
+            'u1',
+            resData[key].title,
+            resData[key].imageUrl,
+            resData[key].description,
+            resData[key].price
+          )
+        );
+      }
+      // console.log(loadedProducts);
+
+      dispatch({
+        type: SET_PRODUCT,
+        products: loadedProducts
+      });
+    };
+  } catch (err) {
+    //send to custom analytics server
+    throw err;
+  }
 };
 
 export const createProduct = (title, description, imageUrl, price) => {
