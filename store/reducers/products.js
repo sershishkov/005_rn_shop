@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
       const productIndex = state.userProducts.findIndex(
         prod => prod.id === action.productData.pid
       );
-      console.log('productIndex=', productIndex);
+      // console.log('productIndex=', productIndex);
       const updatedProduct = new Product(
         action.productData.pid,
         state.userProducts[productIndex].ownerId,
