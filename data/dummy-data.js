@@ -9,6 +9,7 @@ const PRODUCTS = [
     'A red t-shirt, perfect for days with non-red weather.',
     29.99
   ),
+
   new Product(
     'p2',
     'u1',

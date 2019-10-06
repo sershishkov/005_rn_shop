@@ -1,9 +1,41 @@
-import { DELETE_PRODUCT, CREATE_PRODUCT, UPDATE_PRODUCT } from '../types';
+import {
+  CREATE_PRODUCT,
+  SET_PRODUCT,
+  UPDATE_PRODUCT,
+  DELETE_PRODUCT
+} from '../types';
 
-export const deleteProduct = productId => {
-  return {
-    type: DELETE_PRODUCT,
-    pid: productId
+import Product from '../../models/product';
+
+export const fetchProducts = () => {
+  return async dispatch => {
+    const response = await fetch(
+      'https://rn-shop-e9dd2.firebaseio.com/products.json',
+      {
+        // method: 'GET', //Если GET то можно не указывать метод
+      }
+    );
+    const resData = await response.json();
+    const loadedProducts = [];
+
+    for (let key in resData) {
+      loadedProducts.push(
+        new Product(
+          key,
+          'u1',
+          resData[key].title,
+          resData[key].imageUrl,
+          resData[key].description,
+          resData[key].price
+        )
+      );
+    }
+    console.log(loadedProducts);
+
+    dispatch({
+      type: SET_PRODUCT,
+      products: loadedProducts
+    });
   };
 };
 
@@ -49,5 +81,12 @@ export const updateProduct = (id, title, description, imageUrl) => {
       description,
       imageUrl
     }
+  };
+};
+
+export const deleteProduct = productId => {
+  return {
+    type: DELETE_PRODUCT,
+    pid: productId
   };
 };
