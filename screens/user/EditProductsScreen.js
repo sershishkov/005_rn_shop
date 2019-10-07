@@ -49,7 +49,7 @@ const EditProductScreen = props => {
   const editedProduct = useSelector(state =>
     state.products.userProducts.find(prod => prod.id === prodId)
   );
-  console.log(editedProduct);
+  // console.log(editedProduct);
   const dispatch = useDispatch();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
@@ -99,10 +99,11 @@ const EditProductScreen = props => {
             formState.inputValues.title,
             formState.inputValues.description,
             formState.inputValues.imageUrl,
-            formState.inputValues.price
+            +formState.inputValues.price
           )
         );
       }
+      setIsLoading(false);
       props.navigation.goBack();
     } catch (err) {
       setError(err.message);
@@ -117,7 +118,7 @@ const EditProductScreen = props => {
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
-      console.log('122', inputValue);
+      // console.log('122', inputValue);
       dispatchFormState({
         type: FORM_INPUT_UPDATE,
         value: inputValue,
