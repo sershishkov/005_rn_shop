@@ -1,12 +1,12 @@
 import React, { useReducer, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 
-const INPUT_CHAHGE = 'INPUT_CHAHGE';
+const INPUT_CHANGE = 'INPUT_CHANGE';
 const INPUT_BLUR = 'INPUT_BLUR';
 
 const inputReducer = (state, action) => {
   switch (action.type) {
-    case INPUT_CHAHGE:
+    case INPUT_CHANGE:
       return {
         ...state,
         value: action.value,
@@ -17,7 +17,6 @@ const inputReducer = (state, action) => {
         ...state,
         touched: true
       };
-
     default:
       return state;
   }
@@ -56,12 +55,7 @@ const Input = props => {
     if (props.minLength != null && text.length < props.minLength) {
       isValid = false;
     }
-
-    dispatch({
-      type: INPUT_CHAHGE,
-      value: text,
-      isValid: isValid
-    });
+    dispatch({ type: INPUT_CHANGE, value: text, isValid: isValid });
   };
 
   const lostFocusHandler = () => {
