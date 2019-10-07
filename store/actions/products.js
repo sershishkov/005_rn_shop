@@ -86,11 +86,6 @@ export const createProduct = (title, description, imageUrl, price) => {
 };
 
 export const updateProduct = (id, title, description, imageUrl) => {
-  console.log('id', id);
-  console.log('title', title);
-  console.log('description', description);
-  console.log('imageUrl', imageUrl);
-
   return async dispatch => {
     await fetch(`https://rn-shop-e9dd2.firebaseio.com/products/${id}.json`, {
       method: 'PATCH',
@@ -98,10 +93,9 @@ export const updateProduct = (id, title, description, imageUrl) => {
         'Content-Type': 'application.json'
       },
       body: JSON.stringify({
-        title: 'Red Shirt',
-        description: 'A red t-shirt, perfect for days with non-red weather.',
-        imageUrl:
-          'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg'
+        title,
+        description,
+        imageUrl
       })
     });
 
