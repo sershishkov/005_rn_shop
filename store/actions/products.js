@@ -8,8 +8,8 @@ import {
 import Product from '../../models/product';
 
 export const fetchProducts = () => {
-  try {
-    return async dispatch => {
+  return async dispatch => {
+    try {
       const response = await fetch(
         'https://rn-shop-e9dd2.firebaseio.com/products.json',
         {
@@ -45,11 +45,11 @@ export const fetchProducts = () => {
         type: SET_PRODUCT,
         products: loadedProducts
       });
-    };
-  } catch (err) {
-    //send to custom analytics server
-    throw err;
-  }
+    } catch (err) {
+      //send to custom analytics server
+      throw err;
+    }
+  };
 };
 
 export const createProduct = (title, description, imageUrl, price) => {
